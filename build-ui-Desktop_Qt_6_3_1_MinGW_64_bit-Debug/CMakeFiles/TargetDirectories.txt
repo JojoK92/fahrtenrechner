@@ -1,0 +1,5 @@
+C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/CMakeFiles/ui.dir
+C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/CMakeFiles/ui_autogen_timestamp_deps.dir
+C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/CMakeFiles/ui_autogen.dir

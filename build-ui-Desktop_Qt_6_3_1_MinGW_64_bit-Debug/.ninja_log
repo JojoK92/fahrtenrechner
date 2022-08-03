@@ -1,0 +1,15 @@
+# ninja log v5
+0	614	6804710915301752	ui_autogen/timestamp	5b8e6ea425877338
+0	614	6804710915301752	ui_autogen/mocs_compilation.cpp	5b8e6ea425877338
+0	614	6804710915301752	C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/ui_autogen/timestamp	5b8e6ea425877338
+0	614	6804710915301752	C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/ui_autogen/mocs_compilation.cpp	5b8e6ea425877338
+615	1909	6804710929314519	CMakeFiles/ui.dir/ui_autogen/mocs_compilation.cpp.obj	9ae6ced0c37539b3
+616	1939	6804710929614793	CMakeFiles/ui.dir/main.cpp.obj	9651c8572d049300
+618	2225	6804710932477395	CMakeFiles/ui.dir/mainwindow.cpp.obj	5f0db29a9baa0016
+2225	2404	6804710934241378	ui.exe	b9d7e333224ede4b
+15	344	6808001286776518	ui_autogen/timestamp	5b8e6ea425877338
+15	344	6808001286776518	ui_autogen/mocs_compilation.cpp	5b8e6ea425877338
+15	344	6808001286776518	C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/ui_autogen/timestamp	5b8e6ea425877338
+15	344	6808001286776518	C:/Users/johan/Desktop/Fahrtkostenrechner/Project_Fahrtkostenrechner/build-ui-Desktop_Qt_6_3_1_MinGW_64_bit-Debug/ui_autogen/mocs_compilation.cpp	5b8e6ea425877338
+353	2191	6808001305240282	CMakeFiles/ui.dir/mainwindow.cpp.obj	5f0db29a9baa0016
+2191	2590	6808001309198551	ui.exe	b9d7e333224ede4b

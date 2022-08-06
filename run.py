@@ -5,6 +5,7 @@ from ui.Fahrzeiten import Ui_FahrzeitenWindow
 from ui.rechner import Ui_RechnerWindow
 from datetime import datetime
 
+workweekday = "Arbeitstag"
 
 app = QtWidgets.QApplication(sys.argv)
 
@@ -35,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow):
         window_rechner.show()
 
     def work_day_time_save(self):
+        global workweekday
         workweekday = self.ui.ComboBoxWochentage.currentText()
         worktimefrom = self.ui.TimeEditVon.time().toString()
         worktimeto = self.ui.TimeEditBis.time().toString()
@@ -62,7 +64,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                      .total_seconds() / 60))
                 if overlap > 0:
                     self.ui.TableArbeitszeit.removeRow(row)
-                    print("Loop Break, due to time overlap between lesson dates!")
+                    print("#Error: Loop Break, due to overlap in selected lesson times!")
                     break
 
     def delete_selected_row(self):
@@ -132,7 +134,7 @@ class FahrzeitenWindow(QtWidgets.QMainWindow):
                                       - max(lessontimefrom_tbl, lessontimefrom_abgl)).total_seconds() / 60))
                 if overlap > 0:
                     self.ui.TableFahrzeit.removeRow(row)
-                    print("Loop Break, due to time overlap between lesson dates!")
+                    print("#Error: Loop Break, due to overlap in selected lesson times!")
                     break
 
     def delete_selected_row(self):
@@ -162,6 +164,7 @@ class RechnerWindow(QtWidgets.QMainWindow):
         window_fahrzeiten.show()
 
     def anteil_fahrzeiten_berechnen(self):
+        global workweekday
         totaltimequalification = int(window_kundeninfo.ui.GesDauerQuali.value()*60)
         rowsfahrzeit = window_fahrzeiten.ui.TableFahrzeit.rowCount()
         rowsarbeitszeit = window_kundeninfo.ui.TableArbeitszeit.rowCount()
@@ -173,27 +176,34 @@ class RechnerWindow(QtWidgets.QMainWindow):
             list_workweekdays.append(window_kundeninfo.ui.TableArbeitszeit.item(i, 0).text())
 
         for i in range(0, rowsfahrzeit):
+
             lessonweekday = window_fahrzeiten.ui.TableFahrzeit.item(i, 1).text()
             lessontimefrom = datetime.strptime(window_fahrzeiten.ui.TableFahrzeit.item(i, 2).text(), "%H:%M:%S")
             lessontimeto = datetime.strptime(window_fahrzeiten.ui.TableFahrzeit.item(i, 3).text(), "%H:%M:%S")
             lessontimedelta = int(window_fahrzeiten.ui.TableFahrzeit.item(i, 4).text())
 
-            # if-clause necessary if lessonweekday is not contained in workday
-            if lessonweekday not in list_workweekdays:
-                lesson_outside_worktime += lessontimedelta
-
+            # Dict needed to calculate overlap if there are multiple work shifts on the same day!
+            dict_overlapweekday = {}
             for j in range(0, rowsarbeitszeit):
                 workweekday = window_kundeninfo.ui.TableArbeitszeit.item(j, 0).text()
                 worktimefrom = datetime.strptime(window_kundeninfo.ui.TableArbeitszeit.item(j, 1).text(), "%H:%M:%S")
                 worktimeto = datetime.strptime(window_kundeninfo.ui.TableArbeitszeit.item(j, 2).text(), "%H:%M:%S")
                 if lessonweekday == workweekday:
-                    overlap = max(0, int((min(lessontimeto, worktimeto)
-                                          - max(lessontimefrom, worktimefrom)).total_seconds() / 60))
-                    if overlap > 0:
-                        lessontimedelta -= overlap
-                        lesson_outside_worktime += lessontimedelta
+                    if workweekday not in dict_overlapweekday.keys():
+                        dict_overlapweekday[workweekday] = max(0, int((min(lessontimeto, worktimeto)
+                                                                       - max(lessontimefrom, worktimefrom))
+                                                                      .total_seconds() / 60))
                     else:
-                        lesson_outside_worktime += lessontimedelta
+                        dict_overlapweekday[workweekday] = dict_overlapweekday[workweekday] \
+                                                           + max(0, int((min(lessontimeto, worktimeto)
+                                                                         - max(lessontimefrom, worktimefrom))
+                                                                        .total_seconds() / 60))
+            if lessonweekday in dict_overlapweekday.keys():
+                if dict_overlapweekday[lessonweekday] > 0:
+                    lessontimedelta -= dict_overlapweekday[lessonweekday]
+                    lesson_outside_worktime += lessontimedelta
+            else:
+                lesson_outside_worktime += lessontimedelta
 
         if totaltimequalification > 0 and window_fahrzeiten.ui.TableFahrzeit.rowCount() > 0 and \
                 window_kundeninfo.ui.TableArbeitszeit.rowCount() > 0:
